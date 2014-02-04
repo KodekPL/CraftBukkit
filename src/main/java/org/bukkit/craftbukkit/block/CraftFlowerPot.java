@@ -26,7 +26,11 @@ public class CraftFlowerPot extends CraftBlockState implements FlowerPot {
         boolean result = super.update(force, applyPhysics);
 
         if (result) {
-            flowerPot.a(contents == null ? null : CraftItemStack.asNMSCopy(contents).getItem(), contents == null ? -1 : contents.getDurability());
+            if (contents == null) {
+                flowerPot.a(null, -1);
+            } else {
+                flowerPot.a(CraftItemStack.asNMSCopy(contents).getItem(), contents.getDurability());
+            }
             flowerPot.update();
         }
 
