@@ -26,7 +26,7 @@ public class CraftFlowerPot extends CraftBlockState implements FlowerPot {
         boolean result = super.update(force, applyPhysics);
 
         if (result) {
-            flowerPot.a(CraftItemStack.asNMSCopy(contents).getItem(), contents.getDurability());
+            flowerPot.a(contents == null ? null : CraftItemStack.asNMSCopy(contents).getItem(), contents == null ? -1 : contents.getDurability());
             flowerPot.update();
         }
 
@@ -38,9 +38,10 @@ public class CraftFlowerPot extends CraftBlockState implements FlowerPot {
     }
 
     public void setContents(ItemStack itemStack) {
-        if (itemStack == null) {
-            itemStack = new ItemStack(Material.AIR);
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            contents = null;
+        } else {
+            contents = itemStack;
         }
-        contents = itemStack;
     }
 }
