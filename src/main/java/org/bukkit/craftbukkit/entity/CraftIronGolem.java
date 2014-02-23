@@ -28,6 +28,14 @@ public class CraftIronGolem extends CraftGolem implements IronGolem {
         getHandle().setPlayerCreated(playerCreated);
     }
 
+    public boolean isHoldingFlower() {
+        return getHandle().bZ() > 0;
+    }
+
+    public void setHoldingFlower(boolean holdingFlower) {
+        getHandle().a(holdingFlower);
+    }
+
     @Override
     public EntityType getType() {
         return EntityType.IRON_GOLEM;
