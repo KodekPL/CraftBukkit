@@ -7,7 +7,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.FlowerPot;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 public class CraftFlowerPot extends CraftBlockState implements FlowerPot {
