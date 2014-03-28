@@ -29,7 +29,7 @@ public class CraftIronGolem extends CraftGolem implements IronGolem {
     }
 
     public boolean isHoldingFlower() {
-        return getHandle().bZ() > 0;
+        return getHandle().cb() > 0;
     }
 
     public void setHoldingFlower(boolean holdingFlower) {
