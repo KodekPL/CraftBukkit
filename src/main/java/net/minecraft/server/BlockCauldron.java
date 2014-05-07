@@ -3,9 +3,11 @@ package net.minecraft.server;
 import java.util.List;
 import java.util.Random;
 
+// CraftBukkit start
 import org.bukkit.block.BlockState;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFormEvent;
+// CraftBukkit end
 
 public class BlockCauldron extends Block {
 
