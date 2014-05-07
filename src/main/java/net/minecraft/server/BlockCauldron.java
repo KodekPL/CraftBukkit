@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.block.BlockState;
+import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFormEvent;
 
 public class BlockCauldron extends Block {
@@ -50,7 +51,16 @@ public class BlockCauldron extends Block {
 
         if (!world.isStatic && entity.isBurning() && l > 0 && entity.boundingBox.b <= (double) f) {
             entity.extinguish();
-            this.a(world, i, j, k, l - 1);
+            // CraftBukkit start
+            BlockState blockState = world.getWorld().getBlockAt(i, j, k).getState();
+            blockState.setRawData((byte) (l - 1));
+
+            BlockFadeEvent cauldronFadeEvent = new BlockFadeEvent(blockState.getBlock(), blockState);
+            world.getServer().getPluginManager().callEvent(cauldronFadeEvent);
+            if (!cauldronFadeEvent.isCancelled()) {
+                blockState.update(true);
+            }
+            // CraftBukkit end
         }
     }
 
