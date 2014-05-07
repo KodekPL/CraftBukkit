@@ -3,6 +3,9 @@ package net.minecraft.server;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.block.BlockState;
+import org.bukkit.event.block.BlockFormEvent;
+
 public class BlockCauldron extends Block {
 
     public BlockCauldron() {
@@ -117,7 +120,16 @@ public class BlockCauldron extends Block {
             int l = world.getData(i, j, k);
 
             if (l < 3) {
-                world.setData(i, j, k, l + 1, 2);
+                // CraftBukkit start
+                BlockState blockState = world.getWorld().getBlockAt(i, j, k).getState();
+                blockState.setRawData((byte) (l + 1));
+
+                BlockFormEvent cauldronEvent = new BlockFormEvent(blockState.getBlock(), blockState);
+                world.getServer().getPluginManager().callEvent(cauldronEvent);
+                if (!cauldronEvent.isCancelled()) {
+                    blockState.update(true);
+                }
+                // CraftBukkit end
             }
         }
     }
