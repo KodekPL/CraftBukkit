@@ -1,5 +1,8 @@
 package net.minecraft.server;
 
+import org.bukkit.block.BlockState;
+import org.bukkit.event.block.BlockStateChangeEvent;
+
 public class SlotAnvilResult extends Slot {
 
     final World a;
@@ -52,11 +55,29 @@ public class SlotAnvilResult extends Slot {
 
             ++k;
             if (k > 2) {
-                this.a.setAir(this.b, this.c, this.d);
-                this.a.triggerEffect(1020, this.b, this.c, this.d, 0);
+                // CraftBukkit start
+                BlockState blockState = this.a.getWorld().getBlockAt(this.b, this.c, this.d).getState();
+                blockState.setType(org.bukkit.Material.AIR);
+
+                BlockStateChangeEvent anvilChangeEvent = new BlockStateChangeEvent(blockState.getBlock(), blockState);
+                this.a.getServer().getPluginManager().callEvent(anvilChangeEvent);
+                if (!anvilChangeEvent.isCancelled()) {
+                    blockState.update(true);
+                    this.a.triggerEffect(1020, this.b, this.c, this.d, 0);
+                }
+                // CraftBukkit end
             } else {
-                this.a.setData(this.b, this.c, this.d, j | k << 2, 2);
-                this.a.triggerEffect(1021, this.b, this.c, this.d, 0);
+                // CraftBukkit start
+                BlockState blockState = this.a.getWorld().getBlockAt(this.b, this.c, this.d).getState();
+                blockState.setRawData((byte) (j | k << 2));
+
+                BlockStateChangeEvent anvilChangeEvent = new BlockStateChangeEvent(blockState.getBlock(), blockState);
+                this.a.getServer().getPluginManager().callEvent(anvilChangeEvent);
+                if (!anvilChangeEvent.isCancelled()) {
+                    blockState.update(true);
+                    this.a.triggerEffect(1021, this.b, this.c, this.d, 0);
+                }
+                // CraftBukkit end
             }
         } else if (!this.a.isStatic) {
             this.a.triggerEffect(1021, this.b, this.c, this.d, 0);
