@@ -5,8 +5,7 @@ import java.util.Random;
 
 // CraftBukkit start
 import org.bukkit.block.BlockState;
-import org.bukkit.event.block.BlockFadeEvent;
-import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockStateChangeEvent;
 // CraftBukkit end
 
 public class BlockCauldron extends Block {
@@ -57,9 +56,9 @@ public class BlockCauldron extends Block {
             BlockState blockState = world.getWorld().getBlockAt(i, j, k).getState();
             blockState.setRawData((byte) (l - 1));
 
-            BlockFadeEvent cauldronFadeEvent = new BlockFadeEvent(blockState.getBlock(), blockState);
-            world.getServer().getPluginManager().callEvent(cauldronFadeEvent);
-            if (!cauldronFadeEvent.isCancelled()) {
+            BlockStateChangeEvent cauldronChangeEvent = new BlockStateChangeEvent(blockState.getBlock(), blockState);
+            world.getServer().getPluginManager().callEvent(cauldronChangeEvent);
+            if (!cauldronChangeEvent.isCancelled()) {
                 blockState.update(true);
             }
             // CraftBukkit end
@@ -136,9 +135,9 @@ public class BlockCauldron extends Block {
                 BlockState blockState = world.getWorld().getBlockAt(i, j, k).getState();
                 blockState.setRawData((byte) (l + 1));
 
-                BlockFormEvent cauldronEvent = new BlockFormEvent(blockState.getBlock(), blockState);
-                world.getServer().getPluginManager().callEvent(cauldronEvent);
-                if (!cauldronEvent.isCancelled()) {
+                BlockStateChangeEvent cauldronChangeEvent = new BlockStateChangeEvent(blockState.getBlock(), blockState);
+                world.getServer().getPluginManager().callEvent(cauldronChangeEvent);
+                if (!cauldronChangeEvent.isCancelled()) {
                     blockState.update(true);
                 }
                 // CraftBukkit end
